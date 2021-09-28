@@ -1,4 +1,4 @@
-﻿using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Universal;
 
 namespace kTools.Decals
 {
@@ -6,11 +6,11 @@ namespace kTools.Decals
     {
 #region Fields
         static DecalRendererFeature s_Instance;
-        readonly DecalRenderPass m_RenderPass;
+        private DecalRenderPass m_RenderPass;
 #endregion
 
-#region Constructors
-        public DecalRendererFeature()
+#region Initializers
+        void OnEnable()
         {
             s_Instance = this;
             m_RenderPass = new DecalRenderPass();

@@ -8,6 +8,7 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/Packing.hlsl"
 #include "Packages/com.unity.render-pipelines.core/ShaderLibrary/CommonMaterial.hlsl"
+#include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/SurfaceData.hlsl"
 #include "Packages/com.kink3d.decals/ShaderLibrary/Core.hlsl"
 
 // -------------------------------------
@@ -128,20 +129,6 @@ half3 SampleEmission(float4 positionPS)
 #endif
 }
 
-// -------------------------------------
-// SurfaceData
-struct SurfaceData
-{
-    half3 albedo;
-    half3 specular;
-    half  metallic;
-    half  smoothness;
-    half3 normalTS;
-    half3 emission;
-    half  occlusion;
-    half  alpha;
-};
-
 inline void InitializeStandardLitSurfaceData(float4 positionPS, out SurfaceData outSurfaceData)
 {
     half4 albedoAlpha = SAMPLE_DECAL2D(_BaseMap, positionPS);
@@ -162,6 +149,9 @@ inline void InitializeStandardLitSurfaceData(float4 positionPS, out SurfaceData 
     outSurfaceData.normalTS = SampleNormal(positionPS);
     outSurfaceData.occlusion = SampleOcclusion(positionPS);
     outSurfaceData.emission = SampleEmission(positionPS);
+
+    outSurfaceData.clearCoatMask = 0.0h;
+    outSurfaceData.clearCoatSmoothness = 0.0h;
 }
 
 #endif
